@@ -21,18 +21,27 @@
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
                                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                                <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
-                                <x-nav-link href="/about" :active="request()->is('about')">About</x-nav-link>
-                                <x-nav-link href="/jobs" :active="request()->is('jobs')">Jobs</x-nav-link>
-                                <x-nav-link href="/contact" :active="request()->is('contact')">Contact</x-nav-link>
-                                <x-nav-link href="/faq" :active="request()->is('faq')">FAQ</x-nav-link>
+                                @auth
+                                    <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
+                                    <x-nav-link href="/jobs" :active="request()->is('jobs')">Jobs</x-nav-link>
+                                @endauth
+                                @guest
+                                    <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
+                                    <x-nav-link href="/about" :active="request()->is('about')">About</x-nav-link>
+                                    <x-nav-link href="/contact" :active="request()->is('contact')">Contact</x-nav-link>
+                                    <x-nav-link href="/faq" :active="request()->is('faq')">FAQ</x-nav-link>
+                                @endguest
                             </div>
                         </div>
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-4 flex items-center md:ml-6">
-                            {{-- @auth    
-                            @endauth --}}
+                            @auth
+                                <form method="POST" action="/logout">
+                                    @csrf
+                                    <x-form-button>Log Out</x-form-button>
+                                </form>
+                            @endauth
                             @guest
                                 <x-nav-link href="/login" :active="request()->is('login')">Log In</x-nav-link>
                                 <x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link>
