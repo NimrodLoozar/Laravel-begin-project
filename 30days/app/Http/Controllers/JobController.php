@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
-use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class JobController extends Controller
 {
-    public function jobs_view()
+    public function index()
     {
         $jobs = Job::with('employer')->latest()->simplePaginate(3);
 
@@ -42,6 +44,8 @@ class JobController extends Controller
     }
     public function edit(Job $job)
     {
+        Gate::authorize('edit', $job);
+
         return view('jobs.edit', ['job' => $job]);
     }
     public function update(Job $job)

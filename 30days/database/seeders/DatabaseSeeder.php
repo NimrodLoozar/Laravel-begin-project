@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(JobSeeder::class);
-        User::factory(199)->create();
-        Employer::factory(200)->create();
+        User::factory(100)->create();
+        Employer::factory(100)->create();
         // Tag::factory(200)->create();
     }
 }
